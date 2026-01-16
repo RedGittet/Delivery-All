@@ -1,66 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grocery - QuickDeliver</title>
-    <link rel="stylesheet" href="../styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grocery - DeliverItAll</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="grocery-styles.css" />
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="navbar-container">
-            <h1 class="logo">🚚 QuickDeliver</h1>
-            <ul class="nav-links">
-                <li><a href="../index.html" class="nav-item">Home</a></li>
-                <li><a href="food.html" class="nav-item">🍔 Food</a></li>
-                <li><a href="beverage.html" class="nav-item">🥤 Beverage</a></li>
-                <li><a href="medicine.html" class="nav-item">💊 Medicine</a></li>
-                <li><a href="grocery.html" class="nav-item active">🛒 Grocery</a></li>
-                <li><a href="../dashboard.html" class="nav-item dashboard-link">📦 Orders</a></li>
-            </ul>
-        </div>
+      <div class="navbar-container">
+        <h1 class="logo">🚚 QuickDeliver</h1>
+        <ul class="nav-links">
+          <li><a href="../index.html" class="nav-item">Home</a></li>
+          <li><a href="food.html" class="nav-item">🍔 Food</a></li>
+          <li><a href="beverage.html" class="nav-item">🥤 Beverage</a></li>
+          <li><a href="medicine.html" class="nav-item">💊 Medicine</a></li>
+          <li><a href="grocery.html" class="nav-item active">🛒 Grocery</a></li>
+          <li>
+            <a href="../dashboard.html" class="nav-item dashboard-link"
+              >📦 Orders</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
 
-    <div class="category-page-container">
-        <div class="category-header">
-            <h1>🛒 Grocery & Essentials</h1>
-            <p>Fresh produce, pantry items, and household essentials at your doorstep</p>
+    <!-- Grocery Service Hero Section -->
+    <section class="grocery-hero">
+      <div class="grocery-hero-content">
+        <h1>🛒 Fresh Grocery Delivery</h1>
+        <p>
+          Get fresh produce, pantry items, and household essentials delivered to
+          your doorstep in 30-45 minutes
+        </p>
+        <div class="grocery-stats">
+          <div class="stat">
+            <h3>500+</h3>
+            <p>Products Available</p>
+          </div>
+          <div class="stat">
+            <h3>Fresh Daily</h3>
+            <p>Quality Guaranteed</p>
+          </div>
+          <div class="stat">
+            <h3>24/7</h3>
+            <p>Always Open</p>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <section class="products-section">
-            <h2>Fresh Produce</h2>
-            <div class="products-grid">
-                <!-- TEAM MEMBER 4: Add 12 grocery products here with prices and add-to-cart buttons -->
-                <!-- Example format:
-                <div class="product-item">
-                    <h3>Product Name</h3>
-                    <p>Description of the grocery item</p>
-                    <p class="price">$XX.XX</p>
-                    <button class="add-btn" onclick="addToCart('Product Name', XX.XX)">Add to Cart</button>
-                </div>
-                -->
-            </div>
-        </section>
+    <!-- Service Features -->
+    <section class="service-features">
+      <h2>Why Choose Our Grocery Service?</h2>
+      <div class="features-container">
+        <div class="feature-box">
+          <span class="feature-icon">🥬</span>
+          <h3>Fresh Produce</h3>
+          <p>
+            Hand-picked fresh vegetables and fruits sourced directly from local
+            suppliers
+          </p>
+        </div>
+        <div class="feature-box">
+          <span class="feature-icon">⚡</span>
+          <h3>Quick Delivery</h3>
+          <p>Fast 30-45 minute delivery to your location</p>
+        </div>
+        <div class="feature-box">
+          <span class="feature-icon">💰</span>
+          <h3>Best Prices</h3>
+          <p>Competitive prices with weekly discounts and bulk offers</p>
+        </div>
+        <div class="feature-box">
+          <span class="feature-icon">🎁</span>
+          <h3>Special Deals</h3>
+          <p>
+            Exclusive discounts for frequent shoppers and seasonal promotions
+          </p>
+        </div>
+      </div>
+    </section>
 
-        <section class="products-section">
-            <h2>Pantry Items</h2>
-            <div class="products-grid">
-                <!-- TEAM MEMBER 4: Add pantry items here -->
-            </div>
-        </section>
+    <!-- Products Grid -->
+    <div class="category-page-container">
+      <section class="products-section">
+        <h2>Fresh Produce</h2>
+        <div class="products-grid">
+          <div class="product-item">
+            <div class="product-image">🥕</div>
+            <h3>Fresh Carrots</h3>
+            <p>Organic carrots, 1kg bundle</p>
+            <p class="price">$2.99</p>
+            <button class="add-btn" onclick="addToCart('Fresh Carrots', 2.99)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🥬</div>
+            <h3>Lettuce</h3>
+            <p>Fresh green lettuce, 500g</p>
+            <p class="price">$3.49</p>
+            <button class="add-btn" onclick="addToCart('Lettuce', 3.49)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🍅</div>
+            <h3>Tomatoes</h3>
+            <p>Ripe red tomatoes, 1kg</p>
+            <p class="price">$4.99</p>
+            <button class="add-btn" onclick="addToCart('Tomatoes', 4.99)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🥒</div>
+            <h3>Cucumbers</h3>
+            <p>Fresh cucumbers, 500g</p>
+            <p class="price">$2.49</p>
+            <button class="add-btn" onclick="addToCart('Cucumbers', 2.49)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🍎</div>
+            <h3>Apples</h3>
+            <p>Red apples, 1kg (5 pieces)</p>
+            <p class="price">$5.99</p>
+            <button class="add-btn" onclick="addToCart('Apples', 5.99)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🍌</div>
+            <h3>Bananas</h3>
+            <p>Yellow bananas, 1kg bundle</p>
+            <p class="price">$3.79</p>
+            <button class="add-btn" onclick="addToCart('Bananas', 3.79)">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </section>
 
-        <section class="products-section">
-            <h2>Household Essentials</h2>
-            <div class="products-grid">
-                <!-- TEAM MEMBER 4: Add household essentials here -->
-            </div>
-        </section>
+      <section class="products-section">
+        <h2>Pantry Items</h2>
+        <div class="products-grid">
+          <div class="product-item">
+            <div class="product-image">🍚</div>
+            <h3>Rice</h3>
+            <p>Premium white rice, 5kg pack</p>
+            <p class="price">$12.99</p>
+            <button class="add-btn" onclick="addToCart('Rice 5kg', 12.99)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🥫</div>
+            <h3>Canned Beans</h3>
+            <p>Mixed canned beans, 3 tins</p>
+            <p class="price">$4.49</p>
+            <button class="add-btn" onclick="addToCart('Canned Beans', 4.49)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🧈</div>
+            <h3>Cooking Oil</h3>
+            <p>Vegetable oil, 2L bottle</p>
+            <p class="price">$6.99</p>
+            <button class="add-btn" onclick="addToCart('Cooking Oil', 6.99)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🧂</div>
+            <h3>Salt</h3>
+            <p>Sea salt, 500g pack</p>
+            <p class="price">$1.99</p>
+            <button class="add-btn" onclick="addToCart('Salt', 1.99)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🍝</div>
+            <h3>Pasta</h3>
+            <p>Mixed pasta varieties, 500g</p>
+            <p class="price">$2.49</p>
+            <button class="add-btn" onclick="addToCart('Pasta', 2.49)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🥛</div>
+            <h3>Milk</h3>
+            <p>Fresh milk, 1L pack</p>
+            <p class="price">$3.29</p>
+            <button class="add-btn" onclick="addToCart('Milk', 3.29)">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="products-section">
+        <h2>Household Essentials</h2>
+        <div class="products-grid">
+          <div class="product-item">
+            <div class="product-image">🧻</div>
+            <h3>Toilet Paper</h3>
+            <p>4-pack roll toilet paper</p>
+            <p class="price">$7.99</p>
+            <button class="add-btn" onclick="addToCart('Toilet Paper', 7.99)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🧼</div>
+            <h3>Soap</h3>
+            <p>Bar soap set, 3 pieces</p>
+            <p class="price">$5.49</p>
+            <button class="add-btn" onclick="addToCart('Soap Set', 5.49)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🧹</div>
+            <h3>Cleaning Supplies</h3>
+            <p>All-purpose cleaner, 500ml</p>
+            <p class="price">$4.99</p>
+            <button
+              class="add-btn"
+              onclick="addToCart('Cleaning Supplies', 4.99)"
+            >
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">💡</div>
+            <h3>LED Bulbs</h3>
+            <p>Energy-efficient bulbs, 2 pieces</p>
+            <p class="price">$8.99</p>
+            <button class="add-btn" onclick="addToCart('LED Bulbs', 8.99)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">📦</div>
+            <h3>Trash Bags</h3>
+            <p>Garbage bags, 50-count pack</p>
+            <p class="price">$6.49</p>
+            <button class="add-btn" onclick="addToCart('Trash Bags', 6.49)">
+              Add to Cart
+            </button>
+          </div>
+          <div class="product-item">
+            <div class="product-image">🧴</div>
+            <h3>Detergent</h3>
+            <p>Laundry detergent, 1L bottle</p>
+            <p class="price">$5.99</p>
+            <button class="add-btn" onclick="addToCart('Detergent', 5.99)">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-container">
+      <div class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
+        <span class="chat-icon">💬</span>
+        <span class="chat-text">Ask Us!</span>
+      </div>
+
+      <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+          <h3>Grocery Delivery FAQ</h3>
+          <button class="close-btn" onclick="toggleChatbot()">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="bot-message">
+            <p>
+              Hello! 👋 Welcome to our Grocery Delivery service. How can I help
+              you today?
+            </p>
+          </div>
+        </div>
+        <div class="quick-questions">
+          <button onclick="askQuestion('How long does delivery take?')">
+            📦 Delivery Time
+          </button>
+          <button onclick="askQuestion('What are your delivery charges?')">
+            💰 Delivery Charges
+          </button>
+          <button onclick="askQuestion('Do you deliver on weekends?')">
+            📅 Weekend Delivery
+          </button>
+          <button onclick="askQuestion('How do I track my order?')">
+            🗺️ Track Order
+          </button>
+        </div>
+        <div class="chat-input-container">
+          <input
+            type="text"
+            id="userInput"
+            placeholder="Ask a question..."
+            onkeypress="handleEnter(event)"
+          />
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 QuickDeliver. Fast delivery across Singapore | All rights reserved</p>
+      <p>
+        &copy; 2026 QuickDeliver Grocery Service. Fresh delivery across
+        Singapore | All rights reserved
+      </p>
     </footer>
 
     <script src="../app.js"></script>
-</body>
+    <script src="grocery-chatbot.js"></script>
+  </body>
 </html>

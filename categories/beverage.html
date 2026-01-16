@@ -4,63 +4,1572 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beverage - QuickDeliver</title>
-    <link rel="stylesheet" href="../styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #f0ad4e;
+        }
+
+        .nav-item.active {
+            color: #f0ad4e;
+            border-bottom: 2px solid #f0ad4e;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            background: #f0ad4e;
+            color: white !important;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-icon:hover {
+            background: #ec971f;
+            color: white !important;
+        }
+
+        .cart-count {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .section {
+            padding: 3rem 2rem;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .category-header {
+            text-align: center;
+            padding: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-header p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .products-section {
+            margin-bottom: 3rem;
+        }
+
+        .products-section h2 {
+            font-size: 1.5rem;
+            color: #34495e;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 4px solid #f0ad4e;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-item {
+            background: white;
+            border: 1px solid #ecf0f1;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-item:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .product-item h3 {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .product-item p {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .product-item .price {
+            font-size: 1.8rem;
+            color: #27ae60;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        /* Add to Cart Button */
+        .add-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .add-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .add-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 12px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            overflow-y: auto;
+            transition: right 0.3s ease;
+        }
+
+        .dashboard.active {
+            right: 0;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+        }
+
+        .dashboard-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .dashboard-content {
+            padding: 1.5rem;
+        }
+
+        /* Location Section */
+        .location-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .location-section h3 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .location-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .location-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Cart Items Section */
+        .cart-items-section {
+            margin-bottom: 2rem;
+        }
+
+        .cart-items-section h3 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .cart-items-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #95a5a6;
+            padding: 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            border: 1px solid #ecf0f1;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-price {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .qty-btn {
+            background: #ecf0f1;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .qty-btn:hover {
+            background: #bdc3c7;
+        }
+
+        .qty-display {
+            width: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #c0392b;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .order-summary h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .summary-row.total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #27ae60;
+            padding-top: 0.8rem;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        /* Checkout Button */
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+        }
+
+        .checkout-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .checkout-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Dashboard Overlay */
+        .dashboard-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1500;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dashboard-overlay.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer a {
+            color: #f0ad4e;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Chatbot Widget */
+        .chatbot-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2500;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .chatbot-toggle {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .chatbot-toggle.active {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .chatbot-container {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 400px;
+            height: 500px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideUp 0.3s ease;
+        }
+
+        .chatbot-container.active {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot-close:hover {
+            transform: scale(1.2);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 0.8rem;
+            animation: messageIn 0.3s ease;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: #667eea;
+            color: white;
+        }
+
+        .message.bot .message-avatar {
+            background: #e8eef7;
+            color: #667eea;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: #667eea;
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 2px;
+        }
+
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chatbot-input-area {
+            padding: 1rem;
+            border-top: 1px solid #e0e0e0;
+            background: white;
+        }
+
+        .chatbot-input-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chatbot-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .chatbot-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .chatbot-send {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chatbot-send:hover {
+            transform: scale(1.05);
+        }
+
+        .chatbot-send:active {
+            transform: scale(0.95);
+        }
+
+        .chatbot-typing {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #999;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .category-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .product-item {
+                padding: 1rem;
+            }
+
+            .dashboard {
+                width: 100%;
+                right: -100%;
+            }
+
+            .main-content {
+                padding: 1rem 0.5rem;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .chatbot-container {
+                width: 100vw;
+                height: 100vh;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            .category-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-items-list {
+                max-height: 200px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="navbar-container">
-            <h1 class="logo">🚚 QuickDeliver</h1>
+            <a href="../index.html" class="logo">🚚 QuickDeliver</a>
             <ul class="nav-links">
                 <li><a href="../index.html" class="nav-item">Home</a></li>
                 <li><a href="food.html" class="nav-item">🍔 Food</a></li>
                 <li><a href="beverage.html" class="nav-item active">🥤 Beverage</a></li>
                 <li><a href="medicine.html" class="nav-item">💊 Medicine</a></li>
                 <li><a href="grocery.html" class="nav-item">🛒 Grocery</a></li>
-                <li><a href="../dashboard.html" class="nav-item dashboard-link">📦 Orders</a></li>
+                <li><a href="#" class="cart-icon" onclick="toggleDashboard(event)">🛒 Cart <span class="cart-count">0</span></a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="category-page-container">
-        <div class="category-header">
-            <h1>🥤 Beverages</h1>
-            <p>Drinks, juices, coffee, tea, and refreshments delivered fresh to you</p>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="category-header">
+                <h1>🥤 Beverages</h1>
+                <p>Drinks, juices, coffee, tea, and refreshments delivered fresh to you</p>
+            </div>
+
+            <section class="section">
+                <!-- Hot Beverages -->
+                <div class="products-section">
+                    <h2>☕ Hot Beverages</h2>
+                    <div class="products-grid">
+                        <div class="product-item">
+                            <h3>Espresso</h3>
+                            <p>Rich and bold single shot espresso, perfect for morning energy</p>
+                            <p class="price">$3.50</p>
+                            <button class="add-btn" onclick="addToCart('Espresso', 3.50)">Add to Cart</button>
+                        </div>
+                        <div class="product-item">
+                            <h3>Cappuccino</h3>
+                            <p>Creamy cappuccino with perfect milk-to-espresso ratio</p>
+                            <p class="price">$4.50</p>
+                            <button class="add-btn" onclick="addToCart('Cappuccino', 4.50)">Add to Cart</button>
+                        </div>
+                        <div class="product-item">
+                            <h3>Green Tea</h3>
+                            <p>Soothing green tea with natural antioxidants</p>
+                            <p class="price">$3.00</p>
+                            <button class="add-btn" onclick="addToCart('Green Tea', 3.00)">Add to Cart</button>
+                        </div>
+                        <div class="product-item">
+                            <h3>Hot Chocolate</h3>
+                            <p>Velvety hot chocolate made with premium cocoa</p>
+                            <p class="price">$4.00</p>
+                            <button class="add-btn" onclick="addToCart('Hot Chocolate', 4.00)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cold Beverages -->
+                <div class="products-section">
+                    <h2>🧊 Cold Beverages</h2>
+                    <div class="products-grid">
+                        <div class="product-item">
+                            <h3>Iced Coffee</h3>
+                            <p>Refreshing iced coffee with a smooth finish</p>
+                            <p class="price">$4.00</p>
+                            <button class="add-btn" onclick="addToCart('Iced Coffee', 4.00)">Add to Cart</button>
+                        </div>
+                        <div class="product-item">
+                            <h3>Iced Tea</h3>
+                            <p>Chilled iced tea with a hint of lemon</p>
+                            <p class="price">$3.50</p>
+                            <button class="add-btn" onclick="addToCart('Iced Tea', 3.50)">Add to Cart</button>
+                        </div>
+                        <div class="product-item">
+                            <h3>Cola</h3>
+                            <p>Classic cola with a refreshing crisp taste</p>
+                            <p class="price">$2.50</p>
+                            <button class="add-btn" onclick="addToCart('Cola', 2.50)">Add to Cart</button>
+                        </div>
+                        <div class="product-item">
+                            <h3>Lemonade</h3>
+                            <p>Fresh homemade lemonade with natural sweetness</p>
+                            <p class="price">$3.50</p>
+                            <button class="add-btn" onclick="addToCart('Lemonade', 3.50)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Juices & Smoothies -->
+                <div class="products-section">
+                    <h2>🥤 Juices & Smoothies</h2>
+                    <div class="products-grid">
+                        <div class="product-item">
+                            <h3>Orange Juice</h3>
+                            <p>Freshly squeezed orange juice packed with vitamin C</p>
+                            <p class="price">$4.50</p>
+                            <button class="add-btn" onclick="addToCart('Orange Juice', 4.50)">Add to Cart</button>
+                        </div>
+                        <div class="product-item">
+                            <h3>Berry Smoothie</h3>
+                            <p>Mixed berry smoothie with Greek yogurt and honey</p>
+                            <p class="price">$5.50</p>
+                            <button class="add-btn" onclick="addToCart('Berry Smoothie', 5.50)">Add to Cart</button>
+                        </div>
+                        <div class="product-item">
+                            <h3>Mango Smoothie</h3>
+                            <p>Tropical mango smoothie with coconut milk</p>
+                            <p class="price">$5.00</p>
+                            <button class="add-btn" onclick="addToCart('Mango Smoothie', 5.00)">Add to Cart</button>
+                        </div>
+                        <div class="product-item">
+                            <h3>Green Smoothie</h3>
+                            <p>Healthy green smoothie with spinach and banana</p>
+                            <p class="price">$5.50</p>
+                            <button class="add-btn" onclick="addToCart('Green Smoothie', 5.50)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Dashboard Sidebar -->
+    <div id="dashboard" class="dashboard">
+        <div class="dashboard-header">
+            <h2>🛒 Your Cart</h2>
+            <button class="close-btn" onclick="toggleDashboard()">✕</button>
         </div>
 
-        <section class="products-section">
-            <h2>Hot Beverages</h2>
-            <div class="products-grid">
-                <!-- TEAM MEMBER 2: Add 12 beverage products here with prices and add-to-cart buttons -->
-                <!-- Example format:
-                <div class="product-item">
-                    <h3>Product Name</h3>
-                    <p>Description of the beverage</p>
-                    <p class="price">$XX.XX</p>
-                    <button class="add-btn" onclick="addToCart('Product Name', XX.XX)">Add to Cart</button>
+        <div class="dashboard-content">
+            <!-- Location Selection -->
+            <div class="location-section">
+                <h3>Delivery Location</h3>
+                <select id="location" class="location-select" onchange="updateLocation()">
+                    <option value="">Select Region</option>
+                    <optgroup label="🏘️ East Singapore">
+                        <option value="Ang Mo Kio">Ang Mo Kio</option>
+                        <option value="Pasir Ris">Pasir Ris</option>
+                        <option value="Punggol">Punggol</option>
+                        <option value="Serangoon">Serangoon</option>
+                    </optgroup>
+                    <optgroup label="🏘️ West Singapore">
+                        <option value="Bukit Batok">Bukit Batok</option>
+                        <option value="Jurong">Jurong</option>
+                        <option value="Choa Chu Kang">Choa Chu Kang</option>
+                    </optgroup>
+                    <optgroup label="🏘️ South Singapore">
+                        <option value="Bedok">Bedok</option>
+                        <option value="Tampines">Tampines</option>
+                        <option value="Bishan">Bishan</option>
+                        <option value="Marine Parade">Marine Parade</option>
+                    </optgroup>
+                    <optgroup label="🏘️ North Singapore">
+                        <option value="Woodlands">Woodlands</option>
+                        <option value="Yishun">Yishun</option>
+                        <option value="Sembawang">Sembawang</option>
+                    </optgroup>
+                    <optgroup label="🏘️ Central Singapore">
+                        <option value="Orchard">Orchard</option>
+                        <option value="Bukit Timah">Bukit Timah</option>
+                        <option value="Newton">Newton</option>
+                        <option value="River Valley">River Valley</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <!-- Cart Items -->
+            <div class="cart-items-section">
+                <h3>Items</h3>
+                <div id="cart-items-list" class="cart-items-list">
+                    <p class="empty-cart">Your cart is empty</p>
                 </div>
-                -->
             </div>
-        </section>
 
-        <section class="products-section">
-            <h2>Cold Beverages</h2>
-            <div class="products-grid">
-                <!-- TEAM MEMBER 2: Add cold beverage products here -->
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>GST/Service (7%):</span>
+                    <span id="gst">$0.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="total">$0.00</span>
+                </div>
             </div>
-        </section>
 
-        <section class="products-section">
-            <h2>Juices & Smoothies</h2>
-            <div class="products-grid">
-                <!-- TEAM MEMBER 2: Add juice and smoothie products here -->
-            </div>
-        </section>
+            <!-- Checkout Button -->
+            <button class="checkout-btn" onclick="checkout()" id="checkout-btn">Proceed to Checkout</button>
+        </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 QuickDeliver. Fast delivery across Singapore | All rights reserved</p>
+    <!-- Dashboard Overlay -->
+    <div id="dashboard-overlay" class="dashboard-overlay" onclick="toggleDashboard()"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><strong>QuickDeliver</strong></p>
+        <p>Fast delivery across Singapore | All rights reserved</p>
     </footer>
 
-    <script src="../app.js"></script>
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" id="chatbot-toggle" onclick="toggleChatbot()">💬</button>
+        <div class="chatbot-container" id="chatbot-container">
+            <div class="chatbot-header">
+                <h3>QuickDeliver Assistant</h3>
+                <button class="chatbot-close" onclick="closeChatbot()">✕</button>
+            </div>
+            <div class="chatbot-messages" id="chatbot-messages">
+                <div class="message bot">
+                    <div class="message-avatar">🥤</div>
+                    <div class="message-content">
+                        Hi! 👋 Welcome to QuickDeliver Beverages. How can I help you today? Ask me about our drinks, delivery, pricing, or anything else!
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input-area">
+                <form class="chatbot-input-form" onsubmit="sendChatMessage(event)">
+                    <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Type your message..." autocomplete="off">
+                    <button type="submit" class="chatbot-send">➤</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cart Management System
+        let cart = [];
+        let selectedLocation = '';
+
+        // Initialize from localStorage
+        function initializeCart() {
+            const savedCart = localStorage.getItem('beverageCart');
+            const savedLocation = localStorage.getItem('beverageLocation');
+            
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartDisplay();
+            }
+            
+            if (savedLocation) {
+                selectedLocation = savedLocation;
+                document.getElementById('location').value = savedLocation;
+            }
+        }
+
+        // Add item to cart
+        function addToCart(productName, price) {
+            const existingItem = cart.find(item => item.name === productName);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name: productName,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            saveCart();
+            updateCartDisplay();
+            showAddedNotification(productName);
+        }
+
+        // Remove item from cart
+        function removeFromCart(productName) {
+            cart = cart.filter(item => item.name !== productName);
+            saveCart();
+            updateCartDisplay();
+        }
+
+        // Update item quantity
+        function updateQuantity(productName, change) {
+            const item = cart.find(item => item.name === productName);
+            
+            if (item) {
+                item.quantity += change;
+                
+                if (item.quantity <= 0) {
+                    removeFromCart(productName);
+                } else {
+                    saveCart();
+                    updateCartDisplay();
+                }
+            }
+        }
+
+        // Save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('beverageCart', JSON.stringify(cart));
+        }
+
+        // Update location
+        function updateLocation() {
+            selectedLocation = document.getElementById('location').value;
+            localStorage.setItem('beverageLocation', selectedLocation);
+            updateCartDisplay();
+        }
+
+        // Calculate totals
+        function calculateTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const gst = subtotal * 0.07;
+            const total = subtotal + gst;
+            
+            return {
+                subtotal: subtotal.toFixed(2),
+                gst: gst.toFixed(2),
+                total: total.toFixed(2)
+            };
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            updateCartItems();
+            updateOrderSummary();
+            updateCartCount();
+        }
+
+        // Update cart items list
+        function updateCartItems() {
+            const cartItemsList = document.getElementById('cart-items-list');
+            
+            if (cart.length === 0) {
+                cartItemsList.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+                document.getElementById('checkout-btn').disabled = true;
+                return;
+            }
+            
+            document.getElementById('checkout-btn').disabled = !selectedLocation;
+            
+            cartItemsList.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-details">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button class="qty-btn" onclick="updateQuantity('${item.name}', -1)">-</button>
+                        <span class="qty-display">${item.quantity}</span>
+                        <button class="qty-btn" onclick="updateQuantity('${item.name}', 1)">+</button>
+                        <button class="remove-btn" onclick="removeFromCart('${item.name}')">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update order summary
+        function updateOrderSummary() {
+            const totals = calculateTotals();
+            
+            document.getElementById('subtotal').textContent = `$${totals.subtotal}`;
+            document.getElementById('gst').textContent = `$${totals.gst}`;
+            document.getElementById('total').textContent = `$${totals.total}`;
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelector('.cart-count').textContent = count;
+        }
+
+        // Toggle dashboard visibility
+        function toggleDashboard(event) {
+            if (event) {
+                event.preventDefault();
+            }
+            
+            const dashboard = document.getElementById('dashboard');
+            const overlay = document.getElementById('dashboard-overlay');
+            
+            dashboard.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Checkout function
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            if (!selectedLocation) {
+                alert('Please select a delivery location!');
+                return;
+            }
+            
+            const totals = calculateTotals();
+            
+            const orderSummary = `
+╔════════════════════════════════════════════════╗
+║      ORDER CONFIRMATION - QuickDeliver         ║
+╚════════════════════════════════════════════════╝
+
+📍 DELIVERY LOCATION: ${selectedLocation}
+
+📦 ORDER ITEMS:
+${cart.map(item => `   • ${item.name} x${item.quantity} — $${(item.price * item.quantity).toFixed(2)}`).join('\n')}
+
+💰 ORDER SUMMARY:
+   Subtotal:         $${totals.subtotal}
+   GST/Service (7%): $${totals.gst}
+   ─────────────────────────────────
+   TOTAL:            $${totals.total}
+
+✅ Your order has been confirmed!
+🚚 Estimated delivery: 30-45 minutes
+📞 Order ID: ${generateOrderID()}
+
+Thank you for your order! 🎉
+            `;
+            
+            alert(orderSummary);
+            
+            cart = [];
+            selectedLocation = '';
+            saveCart();
+            localStorage.removeItem('beverageLocation');
+            document.getElementById('location').value = '';
+            updateCartDisplay();
+            toggleDashboard();
+        }
+
+        // Generate unique order ID
+        function generateOrderID() {
+            return 'QD' + Date.now().toString().slice(-6) + Math.random().toString(36).substr(2, 5).toUpperCase();
+        }
+
+        // Show notification when item is added
+        function showAddedNotification(productName) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = `✓ ${productName} added to cart!`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                z-index: 3000;
+                animation: slideInRight 0.3s ease, slideOutRight 0.3s ease 2.7s forwards;
+                font-weight: 600;
+            `;
+            
+            if (!document.querySelector('style[data-notification]')) {
+                const style = document.createElement('style');
+                style.setAttribute('data-notification', 'true');
+                style.textContent = `
+                    @keyframes slideInRight {
+                        from {
+                            opacity: 0;
+                            transform: translateX(100px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateX(0);
+                        }
+                    }
+                    
+                    @keyframes slideOutRight {
+                        from {
+                            opacity: 1;
+                            transform: translateX(0);
+                        }
+                        to {
+                            opacity: 0;
+                            transform: translateX(100px);
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCart();
+            
+            document.getElementById('dashboard-overlay').addEventListener('click', function() {
+                toggleDashboard();
+            });
+            
+            document.getElementById('dashboard').addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+
+            // Initialize chatbot
+            initializeChatbot();
+        });
+
+        // ============================================
+        // CHATBOT FUNCTIONALITY
+        // ============================================
+
+        const WEBHOOK_URL = 'https://n8ngc.codeblazar.org/webhook-test/aad8fd9d-ff78-4eb2-9281-36e3a1c688a9';
+        let chatHistory = [];
+
+        function initializeChatbot() {
+            const chatInput = document.getElementById('chatbot-input');
+            if (chatInput) chatInput.focus();
+        }
+
+        function toggleChatbot() {
+            const container = document.getElementById('chatbot-container');
+            const toggle = document.getElementById('chatbot-toggle');
+            
+            container.classList.toggle('active');
+            toggle.classList.toggle('active');
+            
+            if (container.classList.contains('active')) {
+                document.getElementById('chatbot-input').focus();
+            }
+        }
+
+        function closeChatbot() {
+            const container = document.getElementById('chatbot-container');
+            const toggle = document.getElementById('chatbot-toggle');
+            
+            container.classList.remove('active');
+            toggle.classList.remove('active');
+        }
+
+        function sendChatMessage(event) {
+            event.preventDefault();
+            
+            const input = document.getElementById('chatbot-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message to chat
+            addMessageToChat(message, 'user');
+            input.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Send to webhook
+            sendToWebhook(message);
+        }
+
+        function addMessageToChat(text, sender) {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = sender === 'user' ? '👤' : '🥤';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            content.textContent = text;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            chatHistory.push({ sender, text, timestamp: new Date() });
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot';
+            typingDiv.id = 'typing-indicator';
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = '🥤';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content chatbot-typing';
+            content.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            
+            typingDiv.appendChild(avatar);
+            typingDiv.appendChild(content);
+            
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        async function sendToWebhook(message) {
+            try {
+                const payload = {
+                    message: message,
+                    timestamp: new Date().toISOString(),
+                    chatHistory: chatHistory
+                };
+                
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                removeTypingIndicator();
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Handle response from webhook
+                    if (data.reply) {
+                        setTimeout(() => {
+                            addMessageToChat(data.reply, 'bot');
+                        }, 500);
+                    } else if (data.message) {
+                        setTimeout(() => {
+                            addMessageToChat(data.message, 'bot');
+                        }, 500);
+                    } else {
+                        // Default response if no specific reply
+                        setTimeout(() => {
+                            const defaultResponse = getDefaultResponse(message);
+                            addMessageToChat(defaultResponse, 'bot');
+                        }, 500);
+                    }
+                } else {
+                    // Fallback to local response
+                    setTimeout(() => {
+                        const response = getDefaultResponse(message);
+                        addMessageToChat(response, 'bot');
+                    }, 500);
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                removeTypingIndicator();
+                
+                // Fallback to local response on error
+                setTimeout(() => {
+                    const response = getDefaultResponse(message);
+                    addMessageToChat(response, 'bot');
+                }, 500);
+            }
+        }
+
+        function getDefaultResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            
+            // Intent matching for common questions
+            if (message.includes('price') || message.includes('cost') || message.includes('how much')) {
+                return '💰 Our beverages range from $2.50 to $5.50. Hot drinks like espresso cost $3.50, cappuccino $4.50. Smoothies are priced at $5.00-$5.50. Would you like to know about a specific drink?';
+            }
+            
+            if (message.includes('delivery') || message.includes('how long') || message.includes('how fast')) {
+                return '🚚 We deliver in 30-45 minutes across all Singapore regions! Select your location at checkout and we\'ll get your order to you quickly.';
+            }
+            
+            if (message.includes('location') || message.includes('where') || message.includes('area') || message.includes('region')) {
+                return '📍 We deliver to all Singapore regions:\n• East: Ang Mo Kio, Pasir Ris, Punggol, Serangoon\n• West: Bukit Batok, Jurong, Choa Chu Kang\n• South: Bedok, Tampines, Bishan, Marine Parade\n• North: Woodlands, Yishun, Sembawang\n• Central: Orchard, Bukit Timah, Newton, River Valley';
+            }
+            
+            if (message.includes('menu') || message.includes('what drinks') || message.includes('beverages')) {
+                return '☕ We offer:\n• Hot: Espresso, Cappuccino, Green Tea, Hot Chocolate\n• Cold: Iced Coffee, Iced Tea, Cola, Lemonade\n• Juices & Smoothies: Orange Juice, Berry, Mango, Green Smoothie\n\nWould you like to shop now?';
+            }
+            
+            if (message.includes('fresh') || message.includes('quality') || message.includes('made')) {
+                return '✨ All our beverages are made-to-order with fresh ingredients! We never use pre-made drinks. Quality is our priority!';
+            }
+            
+            if (message.includes('gst') || message.includes('service charge') || message.includes('tax')) {
+                return '💳 We add a 7% GST/Service charge to cover delivery and service costs. This helps us maintain our fast delivery standards!';
+            }
+            
+            if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
+                return '👋 Hello! Welcome to QuickDeliver Beverages! How can I assist you today? Feel free to ask about our drinks, delivery, pricing, or anything else!';
+            }
+            
+            if (message.includes('thank') || message.includes('thanks')) {
+                return '😊 You\'re welcome! Is there anything else I can help you with? Ready to place an order?';
+            }
+            
+            if (message.includes('shop') || message.includes('order') || message.includes('buy')) {
+                return '🛒 Great! Scroll down to browse all our delicious beverages and add them to your cart!';
+            }
+            
+            if (message.includes('contact') || message.includes('email') || message.includes('phone') || message.includes('whatsapp')) {
+                return '📧 Contact QuickDeliver for support! You can reach us through the main website. Is there anything else I can help with?';
+            }
+            
+            if (message.includes('payment') || message.includes('pay')) {
+                return '💳 We accept all major credit cards, debit cards, and digital payment methods. Payment is secure!';
+            }
+            
+            if (message.includes('track') || message.includes('status') || message.includes('where is')) {
+                return '📍 Once you place an order, you\'ll receive a confirmation with real-time tracking. You can monitor your delivery status!';
+            }
+            
+            // Default response for unmatched queries
+            return '😊 That\'s a great question! Feel free to browse our beverages and add them to your cart. For more specific information, please contact QuickDeliver support!';
+        }
+    </script>
 </body>
 </html>
